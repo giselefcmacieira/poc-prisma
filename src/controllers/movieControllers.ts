@@ -1,6 +1,7 @@
 import { ReadMovie } from "@/protocols/protocols";
-import { CreateMovie, UpdateMovie } from "@/repositories/movieRepository";
+import { CreateMovie, SelectMovies, UpdateMovie } from "@/repositories/movieRepository";
 import { movieServices } from "@/services/movieService";
+import { SelectablePayloadFields } from "@prisma/client/runtime/library";
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 
@@ -16,12 +17,12 @@ export async function putMovie(req: Request, res: Response): Promise<void> {
     res.status(httpStatus.OK).send({ message: 'Movie updated successfully!' })
 }
 
-/* export async function getMovies(req: Request, res: Response): Promise<void> {
-    const movies = await movieServices.readMovies(req.query as ReadMovie)
-    res.status(httpStatus.OK).send(movies.rows)
+export async function getMovies(req: Request, res: Response): Promise<void> {
+    const movies = await movieServices.readMovies(req.query)
+    res.status(httpStatus.OK).send(movies)
 }
 
-export async function deleteMovies(req: Request, res: Response): Promise<void> {
+/* export async function deleteMovies(req: Request, res: Response): Promise<void> {
     const id: number = Number(req.params.id)
     await movieServices.deleteMovie(id)
     res.status(httpStatus.OK).send('Movie deleted successfully')

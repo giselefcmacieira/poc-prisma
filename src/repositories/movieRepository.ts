@@ -26,6 +26,34 @@ function updateMovie(id: number, movie: UpdateMovie) {
     })
 }
 
+export type SelectMovies = Omit<Movies, "id" | "name" | "status" | "comment" | "createdAt">
+
+function selectMovies(movies) {
+    if (movies.type) {
+        if (movies.platformId) {
+            return prisma.movies.findMany({
+                where: {
+                    AND: [
+                        { type: movies.type }, { platformId: Number(movies.platformId) }
+                    ]
+                }
+            })
+        } else {
+            return prisma.movies.findMany({
+                where: { type: movies.type }
+            })
+        }
+    } else {
+        if (movies.platformId) {
+            return prisma.movies.findMany({
+                where: { platformId: Number(movies.platformId) }
+            })
+        } else {
+            return prisma.movies.findMany()
+        }
+    }
+}
+
 /* function selectMovies(movies: ReadMovie) {
     const { type, platform } = movies
     let query = ''
@@ -52,4 +80,4 @@ function deleteMovie(id: number) {
     return db.query(`DELETE FROM "movies" WHERE id=$1`, [id])
 } */
 
-export const movieRepository = { createMovie, selectById, updateMovie }
+export const movieRepository = { createMovie, selectById, updateMovie, selectMovies }

@@ -1,7 +1,7 @@
 import { badRequestError } from "@/errors/badRequest";
 import { conflictError } from "@/errors/conflict";
 import { ReadMovie, Resp } from "@/protocols/protocols";
-import { UpdateMovie, movieRepository } from "@/repositories/movieRepository";
+import { SelectMovies, UpdateMovie, movieRepository } from "@/repositories/movieRepository";
 import { CreateMovie } from "@/repositories/movieRepository";
 import { Movies } from "@prisma/client";
 
@@ -17,11 +17,11 @@ async function updateMovie(id: number, movie: UpdateMovie) {
     return movieRepository.updateMovie(id, movie)
 }
 
-/* function readMovies(movie: ReadMovie) {
+function readMovies(movie) {
     return movieRepository.selectMovies(movie)
 }
 
-async function deleteMovie(id: number) {
+/* async function deleteMovie(id: number) {
     const existingMovie: Resp = await movieRepository.selectById(id)
     if (existingMovie.qtd === 0) {
         throw badRequestError('This movie do not exist!')
@@ -29,4 +29,4 @@ async function deleteMovie(id: number) {
     return movieRepository.deleteMovie(id)
 } */
 
-export const movieServices = { createMovie, updateMovie }
+export const movieServices = { createMovie, updateMovie, readMovies }
