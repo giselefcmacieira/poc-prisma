@@ -54,30 +54,10 @@ function selectMovies(movies) {
     }
 }
 
-/* function selectMovies(movies: ReadMovie) {
-    const { type, platform } = movies
-    let query = ''
-    let array = []
-    if (type) {
-        array.push(type)
-        query += 'WHERE "type" = $1'
-        if (platform) {
-            array.push(platform)
-            query += ' AND "platform" = $2'
-        }
-    } else if (platform) {
-        array.push(platform)
-        query += 'WHERE "platform" = $1'
-    }
-    return db.query(
-        `SELECT * FROM "movies" 
-            ${query}`,
-        array
-    )
+function deleteMovie(id: number) {
+    return prisma.movies.delete({
+        where: { id }
+    })
 }
 
-function deleteMovie(id: number) {
-    return db.query(`DELETE FROM "movies" WHERE id=$1`, [id])
-} */
-
-export const movieRepository = { createMovie, selectById, updateMovie, selectMovies }
+export const movieRepository = { createMovie, selectById, updateMovie, selectMovies, deleteMovie }

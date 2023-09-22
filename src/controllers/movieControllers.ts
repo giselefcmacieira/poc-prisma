@@ -22,8 +22,8 @@ export async function getMovies(req: Request, res: Response): Promise<void> {
     res.status(httpStatus.OK).send(movies)
 }
 
-/* export async function deleteMovies(req: Request, res: Response): Promise<void> {
+export async function deleteMovies(req: Request, res: Response): Promise<void> {
     const id: number = Number(req.params.id)
     await movieServices.deleteMovie(id)
     res.status(httpStatus.OK).send('Movie deleted successfully')
-} */
+}

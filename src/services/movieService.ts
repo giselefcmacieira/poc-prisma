@@ -21,12 +21,12 @@ function readMovies(movie) {
     return movieRepository.selectMovies(movie)
 }
 
-/* async function deleteMovie(id: number) {
-    const existingMovie: Resp = await movieRepository.selectById(id)
-    if (existingMovie.qtd === 0) {
+async function deleteMovie(id: number) {
+    const existingMovie = await movieRepository.selectById(id)
+    if (!existingMovie) {
         throw badRequestError('This movie do not exist!')
     }
     return movieRepository.deleteMovie(id)
-} */
+}
 
-export const movieServices = { createMovie, updateMovie, readMovies }
+export const movieServices = { createMovie, updateMovie, readMovies, deleteMovie }
